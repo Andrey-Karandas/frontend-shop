@@ -1,0 +1,30 @@
+@if(loading()) {
+<div>Завантаження...</div>
+} @else {
+@for(product of products(); track product.id) {
+<div class="card">
+  <div class="card__top">
+    <a href="#" class="card__image">
+      <img [src]="product.imageUrl" [alt]="product.name" />
+    </a>
+    <div class="card__label">-{{ product.discount }}%</div>
+  </div>
+  <div class="card__bottom">
+    <div class="card__prices">
+      <div class="card__price card__price--discount">
+        <span [attr.data-productid]="product.id" class="card__price--item">{{ getDiscountedPrice(product.price,
+          product.discount) }}₴</span>
+        <span class="card__price--description">Зі знижкою</span>
+      </div>
+      <div class="card__price card__price--common">
+        <span [attr.data-productid]="product.id" class="card__item--price">{{ product.price }}</span>
+        <span class="card__item--description">Звичайна</span>
+      </div>
+    </div>
+    <div class="card__title">{{ product.name }}</div>
+    <button data-type="add" [attr.data-id]="product.id" class="card__add">Додати в
+      кошик</button>
+  </div>
+</div>
+}
+}
