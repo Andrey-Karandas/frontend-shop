@@ -14,7 +14,7 @@ export interface Product {
 @Injectable({providedIn: 'root'})
 export class ProductService {
   private apiUrl = 'https://localhost:7216/api/products';
-
+  
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {

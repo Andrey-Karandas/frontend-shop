@@ -12,7 +12,9 @@ import { ProductService, Product } from '../../services/product';
 export class ProductList implements OnInit {
   products = signal<Product[]>([]);
   loading = signal(true);
-  private allProducts: Product[] = [];
+  allProducts: Product[] = [];
+
+  private currentCount = 10;
 
   constructor(private productService: ProductService) {}
 
@@ -21,7 +23,7 @@ export class ProductList implements OnInit {
       next: (data) => {
         this.allProducts = data;
 
-        this.products.set(data.slice(0, 5));
+        this.products.set(data.slice(0, this.currentCount));
         this.loading.set(false);
       },
       error: (err) => {
@@ -29,6 +31,15 @@ export class ProductList implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  loadMore() : void {
+    if(this.currentCount >= this.allProducts.length) {
+      return
+    }
+
+    this.currentCount += 10;
+    this.products.set(this.allProducts.slice(0, this.currentCount));
   }
 
   getDiscountedPrice(price : number, discount : number) : number {
